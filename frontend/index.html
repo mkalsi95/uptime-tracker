@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><title>Uptime Tracker</title></head>
+<body>
+  <h1>Uptime Tracker</h1>
+  <form id="track-form">
+    <input type="text" id="url" placeholder="Enter URL" required />
+    <button type="submit">Track URL</button>
+  </form>
+  <ul id="status-list"></ul>
+
+  <script>
+    async function fetchStatus() {
+      const res = await fetch('http://localhost:3001/status');  // 👈 Docker hostname
+      const data = await res.json();
+      const list = document.getElementById('status-list');
+      list.innerHTML = '';
+      for (const [url, status] of Object.entries(data)) {
+        const item = document.createElement('li');
+        item.textContent = `${url} → ${status}`;
+        list.appendChild(item);
+      }
+    }
+
+    document.getElementById('track-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('url').value;
+      console.log('Submitting:', url);
+      const res = await fetch('http://localhost:3001/track', {  // 👈 Docker hostname
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      const result = await res.json();
+      console.log('Response:', result);
+      document.getElementById('url').value = '';
+      fetchStatus();
+    });
+
+    setInterval(fetchStatus, 10000);
+    fetchStatus();
+  </script>
+</body>
+</html>
