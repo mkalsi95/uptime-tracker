@@ -1,11 +1,10 @@
 const express = require('express')
 const axios = require('axios')
 const cors = require('cors')
-app.use(cors({ origin: '*' })) // or set to the frontend domain specifically
 
+const app = express() // ✅ Moved this line up!
 
-const app = express()
-app.use(cors())
+app.use(cors({ origin: '*' })) // ✅ CORS must come after app is declared
 app.use(express.json())
 
 const PORT = 3001
