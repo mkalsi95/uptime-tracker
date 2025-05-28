@@ -4,7 +4,11 @@ const cors = require('cors')
 
 const app = express() // ✅ Moved this line up!
 
-app.use(cors({ origin: '*' })) // ✅ CORS must come after app is declared
+app.use(cors({
+  origin: 'https://uptime-ui.onrender.com',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json())
 
 const PORT = 3001
