@@ -11,7 +11,7 @@
 
   <script>
     async function fetchStatus() {
-      const res = await fetch('https://uptime-api.onrender.com/status');  // 👈 Docker hostname
+      const res = await fetch('https://uptime-tracker-1c0c.onrender.com/status');  // 👈 Docker hostname
       const data = await res.json();
       const list = document.getElementById('status-list');
       list.innerHTML = '';
@@ -26,7 +26,7 @@
       e.preventDefault();
       const url = document.getElementById('url').value;
       console.log('Submitting:', url);
-      const res = await fetch('https://uptime-api.onrender.com/track', {  // 👈 Docker hostname
+      const res = await fetch('https://uptime-tracker-1c0c.onrender.com/track', {  // 👈 Docker hostname
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url })
